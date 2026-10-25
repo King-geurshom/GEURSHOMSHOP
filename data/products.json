@@ -1,0 +1,28 @@
+```json
+[
+  {
+    "id": "1",
+    "name": "Radio",
+    "category": "Electronics",
+    "price": 15000,
+    "image": "https://placehold.co/600x400?text=Radio",
+    "description": "Radio yo kumva amakuru n'umuziki."
+  },
+  {
+    "id": "2",
+    "name": "Headphones",
+    "category": "Electronics",
+    "price": 8000,
+    "image": "https://placehold.co/600x400?text=Headphones",
+    "description": "Headphones zo kumva umuziki."
+  },
+  {
+    "id": "3",
+    "name": "Ubukomo bw'amasaro",
+    "category": "Imitako",
+    "price": 500,
+    "image": "https://placehold.co/600x400?text=Bracelet",
+    "description": "Ubukomo bwiza bukozwe mu masaro."
+  }
+]
+```
