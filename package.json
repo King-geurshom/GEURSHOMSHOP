@@ -1,0 +1,15 @@
+```json
+{
+  "name": "geurshom-modern-shop",
+  "version": "1.0.0",
+  "description": "Geurshom Modern Shop Online Store",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "dotenv": "^16.4.7",
+    "express": "^4.21.2"
+  }
+}
+```
