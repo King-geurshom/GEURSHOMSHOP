@@ -1,0 +1,966 @@
+```html
+<!DOCTYPE html>
+<html lang="rw">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Admin Dashboard | Geurshom Modern Shop</title>
+
+  <style>
+    :root {
+      --green: #075e43;
+      --dark: #063b2d;
+      --gold: #f4b942;
+      --background: #f3f6f5;
+      --white: #ffffff;
+      --red: #c62828;
+      --border: #dce4e0;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      background: var(--background);
+      color: #222;
+      line-height: 1.5;
+    }
+
+    header {
+      background: var(--dark);
+      color: white;
+      padding: 20px 5%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    header h1 {
+      font-size: 22px;
+    }
+
+    header h1 span {
+      color: var(--gold);
+    }
+
+    .header-actions {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .container {
+      width: 92%;
+      max-width: 1200px;
+      margin: 28px auto;
+    }
+
+    .panel {
+      background: var(--white);
+      padding: 24px;
+      border-radius: 12px;
+      box-shadow: 0 3px 14px #0000000d;
+      margin-bottom: 24px;
+    }
+
+    h2 {
+      color: var(--dark);
+      margin-bottom: 18px;
+    }
+
+    .login-panel {
+      max-width: 450px;
+      margin: 55px auto;
+    }
+
+    .form-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 16px;
+    }
+
+    .field {
+      display: flex;
+      flex-direction: column;
+      gap: 7px;
+    }
+
+    .field.full {
+      grid-column: 1 / -1;
+    }
+
+    label {
+      font-weight: bold;
+      font-size: 14px;
+    }
+
+    input,
+    select,
+    textarea {
+      width: 100%;
+      padding: 12px;
+      border: 1px solid var(--border);
+      border-radius: 7px;
+      font-size: 15px;
+      background: white;
+    }
+
+    input:focus,
+    select:focus,
+    textarea:focus {
+      outline: 2px solid #98cbb6;
+      border-color: var(--green);
+    }
+
+    textarea {
+      resize: vertical;
+      min-height: 80px;
+    }
+
+    .button {
+      border: none;
+      border-radius: 7px;
+      padding: 11px 16px;
+      cursor: pointer;
+      font-weight: bold;
+      font-size: 14px;
+      text-decoration: none;
+      display: inline-block;
+      text-align: center;
+    }
+
+    .primary {
+      background: var(--green);
+      color: white;
+    }
+
+    .primary:hover {
+      background: var(--dark);
+    }
+
+    .gold {
+      background: var(--gold);
+      color: #222;
+    }
+
+    .danger {
+      background: var(--red);
+      color: white;
+    }
+
+    .secondary {
+      background: #e6ece9;
+      color: #222;
+    }
+
+    .button:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+
+    .form-actions {
+      display: flex;
+      gap: 10px;
+      margin-top: 20px;
+      flex-wrap: wrap;
+    }
+
+    .message {
+      display: none;
+      padding: 12px;
+      border-radius: 7px;
+      margin: 15px 0;
+      overflow-wrap: anywhere;
+    }
+
+    .message.show {
+      display: block;
+    }
+
+    .message.error {
+      background: #ffebee;
+      color: #a71919;
+    }
+
+    .message.success {
+      background: #e4f6e9;
+      color: #126331;
+    }
+
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 16px;
+      margin-bottom: 24px;
+    }
+
+    .stat-card {
+      background: white;
+      padding: 20px;
+      border-radius: 10px;
+      border-left: 5px solid var(--green);
+      box-shadow: 0 3px 10px #00000008;
+    }
+
+    .stat-card p {
+      color: #666;
+      font-size: 14px;
+    }
+
+    .stat-card strong {
+      display: block;
+      margin-top: 8px;
+      font-size: 25px;
+      color: var(--dark);
+    }
+
+    .table-wrap {
+      overflow-x: auto;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      min-width: 720px;
+    }
+
+    th,
+    td {
+      text-align: left;
+      padding: 13px;
+      border-bottom: 1px solid #e5eae7;
+      vertical-align: middle;
+    }
+
+    th {
+      background: #edf4f0;
+      color: var(--dark);
+    }
+
+    .product-thumb {
+      width: 55px;
+      height: 55px;
+      object-fit: cover;
+      border-radius: 6px;
+      background: #eee;
+    }
+
+    .table-actions {
+      display: flex;
+      gap: 7px;
+      flex-wrap: wrap;
+    }
+
+    .table-actions .button {
+      padding: 8px 10px;
+    }
+
+    .hidden {
+      display: none !important;
+    }
+
+    .hint {
+      color: #666;
+      font-size: 13px;
+      margin-top: 5px;
+    }
+
+    footer {
+      text-align: center;
+      padding: 25px;
+      color: #666;
+    }
+
+    @media (max-width: 650px) {
+      header {
+        align-items: flex-start;
+      }
+
+      .form-grid,
+      .stats {
+        grid-template-columns: 1fr;
+      }
+
+      .panel {
+        padding: 17px;
+      }
+
+      .container {
+        width: 94%;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+<header>
+  <h1>GEURSHOM <span>ADMIN</span></h1>
+
+  <div class="header-actions">
+    <a href="/" class="button gold">Reba Website</a>
+    <button id="logoutButton" class="button secondary hidden">
+      Gusohoka
+    </button>
+  </div>
+</header>
+
+<main class="container">
+
+  <!-- LOGIN -->
+  <section id="loginSection" class="panel login-panel">
+    <h2>Kwinjira muri Admin</h2>
+
+    <p class="hint">
+      Koresha amakuru ya admin washyize muri server yawe.
+    </p>
+
+    <div id="loginMessage" class="message"></div>
+
+    <form id="loginForm">
+      <div class="field">
+        <label for="username">Izina rya Admin</label>
+        <input
+          id="username"
+          name="username"
+          autocomplete="username"
+          required
+        >
+      </div>
+
+      <br>
+
+      <div class="field">
+        <label for="password">Password</label>
+        <input
+          id="password"
+          name="password"
+          type="password"
+          autocomplete="current-password"
+          required
+        >
+      </div>
+
+      <div class="form-actions">
+        <button id="loginButton" type="submit" class="button primary">
+          Injira
+        </button>
+      </div>
+    </form>
+  </section>
+
+  <!-- DASHBOARD -->
+  <section id="dashboardSection" class="hidden">
+
+    <div class="stats">
+      <div class="stat-card">
+        <p>Ibicuruzwa byose</p>
+        <strong id="totalProducts">0</strong>
+      </div>
+
+      <div class="stat-card">
+        <p>Categories</p>
+        <strong id="totalCategories">0</strong>
+      </div>
+
+      <div class="stat-card">
+        <p>Igiteranyo cy'agaciro k'ibicuruzwa</p>
+        <strong id="totalValue">0 RWF</strong>
+      </div>
+    </div>
+
+    <!-- ADD / EDIT PRODUCT -->
+    <section class="panel">
+      <h2 id="formTitle">Ongeraho Igicuruzwa</h2>
+
+      <div id="productMessage" class="message"></div>
+
+      <form id="productForm">
+        <input type="hidden" id="productId">
+
+        <div class="form-grid">
+
+          <div class="field">
+            <label for="productName">Izina ry'igicuruzwa *</label>
+            <input
+              id="productName"
+              required
+              maxlength="120"
+              placeholder="Urugero: Radio"
+            >
+          </div>
+
+          <div class="field">
+            <label for="productCategory">Icyiciro *</label>
+            <select id="productCategory" required>
+              <option value="Electronics">Electronics</option>
+              <option value="Imitako">Imitako</option>
+              <option value="Ibikoresho byo mu rugo">
+                Ibikoresho byo mu rugo
+              </option>
+              <option value="Ibindi">Ibindi</option>
+            </select>
+          </div>
+
+          <div class="field">
+            <label for="productPrice">Igiciro muri RWF *</label>
+            <input
+              id="productPrice"
+              type="number"
+              min="0"
+              step="1"
+              required
+              placeholder="15000"
+            >
+          </div>
+
+          <div class="field">
+            <label for="productImage">Link y'ifoto</label>
+            <input
+              id="productImage"
+              type="url"
+              maxlength="1000"
+              placeholder="https://example.com/photo.jpg"
+            >
+          </div>
+
+          <div class="field full">
+            <label for="productDescription">Ibisobanuro</label>
+            <textarea
+              id="productDescription"
+              maxlength="1000"
+              placeholder="Andika ibisobanuro by'igicuruzwa..."
+            ></textarea>
+          </div>
+
+        </div>
+
+        <p class="hint">
+          Koresha link y'ifoto iboneka kuri internet. Iyi form ntishyiraho
+          ifoto yo muri mudasobwa; bisaba kongeramo uburyo bwo kuyohereza kuri server.
+        </p>
+
+        <div class="form-actions">
+          <button id="saveButton" class="button primary" type="submit">
+            Bika Igicuruzwa
+          </button>
+
+          <button
+            id="cancelEditButton"
+            class="button secondary hidden"
+            type="button"
+          >
+            Hagarika Guhindura
+          </button>
+
+          <button
+            id="refreshButton"
+            class="button gold"
+            type="button"
+          >
+            Ongera Usome Ibicuruzwa
+          </button>
+        </div>
+      </form>
+    </section>
+
+    <!-- PRODUCTS TABLE -->
+    <section class="panel">
+      <h2>Gucunga Ibicuruzwa</h2>
+
+      <div class="field" style="max-width: 450px; margin-bottom: 18px;">
+        <label for="tableSearch">Shakisha igicuruzwa</label>
+        <input
+          id="tableSearch"
+          type="search"
+          placeholder="Andika izina cyangwa icyiciro..."
+        >
+      </div>
+
+      <div id="listMessage" class="message"></div>
+
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Ifoto</th>
+              <th>Izina</th>
+              <th>Icyiciro</th>
+              <th>Igiciro</th>
+              <th>Ibikorwa</th>
+            </tr>
+          </thead>
+
+          <tbody id="productsTable">
+            <tr>
+              <td colspan="5">Nta bicuruzwa birashyirwamo.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+  </section>
+
+</main>
+
+<footer>
+  © <span id="year"></span> Geurshom Modern Shop — Admin Dashboard
+</footer>
+
+<script>
+  /*
+    BACKEND API:
+    Iyi dashboard iteganya ko server.js itanga:
+      POST   /api/admin/login
+      GET    /api/products
+      POST   /api/products
+      PUT    /api/products/:id
+      DELETE /api/products/:id
+
+    Login igomba gusubiza token mu buryo bwa:
+      { "token": "..." }
+
+    Hindura API paths hano niba server.js yawe ikoresha izindi.
+    Server igomba kugenzura uburenganzira bwa admin kuri buri gikorwa.
+  */
+
+  const API = {
+    login: "/api/admin/login",
+    products: "/api/products"
+  };
+
+  let products = [];
+  let authToken = sessionStorage.getItem("geurshom_admin_token") || "";
+
+  const loginSection = document.getElementById("loginSection");
+  const dashboardSection = document.getElementById("dashboardSection");
+  const loginMessage = document.getElementById("loginMessage");
+  const productMessage = document.getElementById("productMessage");
+  const listMessage = document.getElementById("listMessage");
+  const productsTable = document.getElementById("productsTable");
+
+  document.getElementById("year").textContent = new Date().getFullYear();
+
+  function showMessage(element, message, type = "error") {
+    element.textContent = message;
+    element.className = "message show " + type;
+  }
+
+  function clearMessage(element) {
+    element.textContent = "";
+    element.className = "message";
+  }
+
+  function money(value) {
+    return new Intl.NumberFormat("en-RW").format(Number(value) || 0) + " RWF";
+  }
+
+  function safeImage(url) {
+    if (!url) {
+      return "https://placehold.co/100x100?text=Product";
+    }
+
+    try {
+      const parsed = new URL(url, window.location.origin);
+
+      if (parsed.protocol === "https:" || parsed.origin === window.location.origin) {
+        return parsed.href;
+      }
+    } catch (_) {}
+
+    return "https://placehold.co/100x100?text=Product";
+  }
+
+  async function apiRequest(path, options = {}) {
+    const headers = {
+      ...(options.headers || {})
+    };
+
+    if (options.body) {
+      headers["Content-Type"] = "application/json";
+    }
+
+    if (authToken) {
+      headers["Authorization"] = "Bearer " + authToken;
+    }
+
+    const response = await fetch(path, {
+      ...options,
+      headers
+    });
+
+    const text = await response.text();
+    let data = {};
+
+    try {
+      data = text ? JSON.parse(text) : {};
+    } catch (_) {
+      data = { message: text };
+    }
+
+    if (response.status === 401 || response.status === 403) {
+      if (authToken) {
+        logout();
+      }
+
+      throw new Error(data.message || "Ntabwo wemerewe gukora iki gikorwa.");
+    }
+
+    if (!response.ok) {
+      throw new Error(data.message || "Habaye ikibazo. Ongera ugerageze.");
+    }
+
+    return data;
+  }
+
+  function showDashboard() {
+    loginSection.classList.add("hidden");
+    dashboardSection.classList.remove("hidden");
+    document.getElementById("logoutButton").classList.remove("hidden");
+  }
+
+  function showLogin() {
+    loginSection.classList.remove("hidden");
+    dashboardSection.classList.add("hidden");
+    document.getElementById("logoutButton").classList.add("hidden");
+  }
+
+  function logout() {
+    authToken = "";
+    sessionStorage.removeItem("geurshom_admin_token");
+    showLogin();
+  }
+
+  document.getElementById("logoutButton").addEventListener("click", logout);
+
+  document.getElementById("loginForm").addEventListener("submit", async event => {
+    event.preventDefault();
+    clearMessage(loginMessage);
+
+    const button = document.getElementById("loginButton");
+    button.disabled = true;
+    button.textContent = "Birimo kwinjira...";
+
+    try {
+      const result = await apiRequest(API.login, {
+        method: "POST",
+        body: JSON.stringify({
+          username: document.getElementById("username").value.trim(),
+          password: document.getElementById("password").value
+        })
+      });
+
+      if (!result.token) {
+        throw new Error(
+          "Server ntiyatanze token. Reba uburyo login ikorwa muri server.js."
+        );
+      }
+
+      authToken = result.token;
+      sessionStorage.setItem("geurshom_admin_token", authToken);
+
+      showDashboard();
+      await loadProducts();
+
+      document.getElementById("password").value = "";
+
+    } catch (error) {
+      showMessage(loginMessage, error.message);
+    } finally {
+      button.disabled = false;
+      button.textContent = "Injira";
+    }
+  });
+
+  async function loadProducts() {
+    clearMessage(listMessage);
+    productsTable.innerHTML =
+      '<tr><td colspan="5">Birimo gusoma ibicuruzwa...</td></tr>';
+
+    try {
+      const result = await apiRequest(API.products);
+
+      products = Array.isArray(result)
+        ? result
+        : Array.isArray(result.products)
+          ? result.products
+          : [];
+
+      renderProducts();
+      updateStats();
+
+    } catch (error) {
+      products = [];
+      renderProducts();
+      updateStats();
+      showMessage(
+        listMessage,
+        error.message + " Reba niba server.js iri gukora kandi API paths zihuye."
+      );
+    }
+  }
+
+  function updateStats() {
+    document.getElementById("totalProducts").textContent = products.length;
+
+    const categories = new Set(
+      products.map(product => product.category || "Ibindi")
+    );
+
+    document.getElementById("totalCategories").textContent = categories.size;
+
+    const total = products.reduce(
+      (sum, product) => sum + (Number(product.price) || 0),
+      0
+    );
+
+    document.getElementById("totalValue").textContent = money(total);
+  }
+
+  function renderProducts() {
+    const search = document.getElementById("tableSearch")
+      .value.trim().toLowerCase();
+
+    const filtered = products.filter(product => {
+      return (
+        String(product.name || "").toLowerCase().includes(search) ||
+        String(product.category || "").toLowerCase().includes(search)
+      );
+    });
+
+    productsTable.replaceChildren();
+
+    if (filtered.length === 0) {
+      const row = document.createElement("tr");
+      const cell = document.createElement("td");
+
+      cell.colSpan = 5;
+      cell.textContent = "Nta bicuruzwa bihari cyangwa bihuye n'ibyo washakishije.";
+
+      row.appendChild(cell);
+      productsTable.appendChild(row);
+      return;
+    }
+
+    filtered.forEach(product => {
+      const row = document.createElement("tr");
+
+      const imageCell = document.createElement("td");
+      const image = document.createElement("img");
+
+      image.className = "product-thumb";
+      image.src = safeImage(product.image);
+      image.alt = product.name || "Igicuruzwa";
+      image.loading = "lazy";
+
+      image.onerror = () => {
+        image.src = "https://placehold.co/100x100?text=Product";
+      };
+
+      imageCell.appendChild(image);
+
+      const nameCell = document.createElement("td");
+      nameCell.textContent = product.name || "";
+
+      const categoryCell = document.createElement("td");
+      categoryCell.textContent = product.category || "Ibindi";
+
+      const priceCell = document.createElement("td");
+      priceCell.textContent = money(product.price);
+
+      const actionsCell = document.createElement("td");
+      const actions = document.createElement("div");
+
+      actions.className = "table-actions";
+
+      const editButton = document.createElement("button");
+      editButton.className = "button gold";
+      editButton.textContent = "Hindura";
+      editButton.type = "button";
+      editButton.addEventListener("click", () => editProduct(product));
+
+      const deleteButton = document.createElement("button");
+      deleteButton.className = "button danger";
+      deleteButton.textContent = "Siba";
+      deleteButton.type = "button";
+      deleteButton.addEventListener("click", () => deleteProduct(product));
+
+      actions.append(editButton, deleteButton);
+      actionsCell.appendChild(actions);
+
+      row.append(
+        imageCell,
+        nameCell,
+        categoryCell,
+        priceCell,
+        actionsCell
+      );
+
+      productsTable.appendChild(row);
+    });
+  }
+
+  function editProduct(product) {
+    document.getElementById("productId").value = product.id;
+    document.getElementById("productName").value = product.name || "";
+    document.getElementById("productCategory").value =
+      product.category || "Ibindi";
+    document.getElementById("productPrice").value = product.price ?? "";
+    document.getElementById("productImage").value = product.image || "";
+    document.getElementById("productDescription").value =
+      product.description || "";
+
+    document.getElementById("formTitle").textContent = "Hindura Igicuruzwa";
+    document.getElementById("saveButton").textContent = "Bika Impinduka";
+    document.getElementById("cancelEditButton").classList.remove("hidden");
+
+    clearMessage(productMessage);
+
+    document.getElementById("productForm").scrollIntoView({
+      behavior: "smooth",
+      block: "start"
+    });
+  }
+
+  function resetProductForm() {
+    document.getElementById("productForm").reset();
+    document.getElementById("productId").value = "";
+
+    document.getElementById("formTitle").textContent =
+      "Ongeraho Igicuruzwa";
+
+    document.getElementById("saveButton").textContent =
+      "Bika Igicuruzwa";
+
+    document.getElementById("cancelEditButton").classList.add("hidden");
+  }
+
+  document.getElementById("cancelEditButton").addEventListener(
+    "click",
+    resetProductForm
+  );
+
+  document.getElementById("productForm").addEventListener(
+    "submit",
+    async event => {
+      event.preventDefault();
+      clearMessage(productMessage);
+
+      const id = document.getElementById("productId").value;
+
+      const product = {
+        name: document.getElementById("productName").value.trim(),
+        category: document.getElementById("productCategory").value,
+        price: Number(document.getElementById("productPrice").value),
+        image: document.getElementById("productImage").value.trim(),
+        description: document.getElementById("productDescription").value.trim()
+      };
+
+      if (!product.name || !Number.isFinite(product.price) || product.price < 0) {
+        showMessage(productMessage, "Reba izina n'igiciro wanditse.");
+        return;
+      }
+
+      if (product.image) {
+        try {
+          const url = new URL(product.image);
+
+          if (url.protocol !== "https:") {
+            showMessage(productMessage, "Link y'ifoto igomba gukoresha HTTPS.");
+            return;
+          }
+        } catch (_) {
+          showMessage(productMessage, "Link y'ifoto ntabwo imeze neza.");
+          return;
+        }
+      }
+
+      const saveButton = document.getElementById("saveButton");
+      saveButton.disabled = true;
+      saveButton.textContent = "Birimo kubika...";
+
+      try {
+        const path = id
+          ? API.products + "/" + encodeURIComponent(id)
+          : API.products;
+
+        await apiRequest(path, {
+          method: id ? "PUT" : "POST",
+          body: JSON.stringify(product)
+        });
+
+        showMessage(
+          productMessage,
+          id
+            ? "Igicuruzwa cyahinduwe neza."
+            : "Igicuruzwa cyongeweho neza.",
+          "success"
+        );
+
+        resetProductForm();
+        await loadProducts();
+
+      } catch (error) {
+        showMessage(productMessage, error.message);
+      } finally {
+        saveButton.disabled = false;
+        saveButton.textContent = id ? "Bika Impinduka" : "Bika Igicuruzwa";
+      }
+    }
+  );
+
+  async function deleteProduct(product) {
+    const confirmed = confirm(
+      "Urashaka gusiba igicuruzwa '" + product.name + "'?"
+    );
+
+    if (!confirmed) return;
+
+    try {
+      await apiRequest(
+        API.products + "/" + encodeURIComponent(product.id),
+        { method: "DELETE" }
+      );
+
+      showMessage(listMessage, "Igicuruzwa cyasibwe neza.", "success");
+      await loadProducts();
+
+    } catch (error) {
+      showMessage(listMessage, error.message);
+    }
+  }
+
+  document.getElementById("tableSearch").addEventListener(
+    "input",
+    renderProducts
+  );
+
+  document.getElementById("refreshButton").addEventListener(
+    "click",
+    loadProducts
+  );
+
+  async function initialize() {
+    if (!authToken) {
+      showLogin();
+      return;
+    }
+
+    showDashboard();
+    await loadProducts();
+  }
+
+  initialize();
+</script>
+
+</body>
+</html>
+```
