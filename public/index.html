@@ -1,0 +1,573 @@
+```html
+<!DOCTYPE html>
+<html lang="rw">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Geurshom Modern Shop</title>
+  <meta name="description" content="Gura electronics, ubukomo, amaherena, imikufi n'ibindi kuri Geurshom Modern Shop.">
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    :root {
+      --green: #075e43;
+      --dark: #063b2d;
+      --gold: #f4b942;
+      --light: #f5f7f6;
+      --white: #ffffff;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      background: var(--light);
+      color: #222;
+      line-height: 1.6;
+    }
+
+    header {
+      background: var(--green);
+      color: white;
+      padding: 18px 5%;
+    }
+
+    .header-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 15px;
+      flex-wrap: wrap;
+    }
+
+    .logo {
+      font-size: 25px;
+      font-weight: bold;
+    }
+
+    .logo span {
+      color: var(--gold);
+    }
+
+    .header-contact {
+      font-size: 14px;
+    }
+
+    nav {
+      display: flex;
+      gap: 18px;
+      flex-wrap: wrap;
+      margin-top: 15px;
+    }
+
+    nav a {
+      color: white;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    nav a:hover {
+      color: var(--gold);
+    }
+
+    .hero {
+      background: linear-gradient(135deg, #063b2d, #087f5b);
+      color: white;
+      padding: 55px 5%;
+      text-align: center;
+    }
+
+    .hero h1 {
+      font-size: clamp(28px, 5vw, 46px);
+      margin-bottom: 12px;
+    }
+
+    .hero p {
+      max-width: 650px;
+      margin: 0 auto 22px;
+    }
+
+    .button {
+      display: inline-block;
+      border: none;
+      border-radius: 7px;
+      padding: 12px 20px;
+      background: var(--gold);
+      color: #222;
+      text-decoration: none;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    .button:hover {
+      opacity: 0.88;
+    }
+
+    .search-area {
+      padding: 25px 5% 10px;
+      text-align: center;
+    }
+
+    .search-area input {
+      width: 100%;
+      max-width: 600px;
+      padding: 14px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      font-size: 16px;
+    }
+
+    .categories {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 10px;
+      padding: 15px 5% 25px;
+    }
+
+    .category-button {
+      background: white;
+      border: 1px solid #ddd;
+      padding: 10px 16px;
+      border-radius: 20px;
+      cursor: pointer;
+    }
+
+    .category-button.active,
+    .category-button:hover {
+      background: var(--green);
+      color: white;
+    }
+
+    .section {
+      padding: 25px 5% 45px;
+    }
+
+    .section h2 {
+      text-align: center;
+      margin-bottom: 25px;
+      color: var(--dark);
+      font-size: 29px;
+    }
+
+    .products {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+      gap: 20px;
+    }
+
+    .product-card {
+      background: white;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 3px 12px rgba(0, 0, 0, 0.08);
+      transition: transform 0.2s;
+    }
+
+    .product-card:hover {
+      transform: translateY(-4px);
+    }
+
+    .product-image {
+      width: 100%;
+      height: 190px;
+      object-fit: cover;
+      background: #e8eeeb;
+      display: block;
+    }
+
+    .product-info {
+      padding: 16px;
+    }
+
+    .product-info h3 {
+      font-size: 18px;
+      margin-bottom: 6px;
+    }
+
+    .category-label {
+      color: #666;
+      font-size: 13px;
+    }
+
+    .price {
+      color: var(--green);
+      font-size: 20px;
+      font-weight: bold;
+      margin: 10px 0;
+    }
+
+    .order-button {
+      display: block;
+      text-align: center;
+      background: #168447;
+      color: white;
+      text-decoration: none;
+      padding: 10px;
+      border-radius: 6px;
+      font-weight: bold;
+    }
+
+    .order-button:hover {
+      background: #0b6634;
+    }
+
+    .empty-message {
+      text-align: center;
+      padding: 30px;
+      grid-column: 1 / -1;
+    }
+
+    .about {
+      background: white;
+      padding: 40px 5%;
+      text-align: center;
+    }
+
+    .about p {
+      max-width: 750px;
+      margin: auto;
+    }
+
+    .contact {
+      background: #e9f2ed;
+      padding: 35px 5%;
+      text-align: center;
+    }
+
+    .contact p {
+      margin: 8px 0;
+    }
+
+    footer {
+      background: var(--dark);
+      color: white;
+      text-align: center;
+      padding: 22px 5%;
+    }
+
+    .whatsapp-float {
+      position: fixed;
+      right: 18px;
+      bottom: 18px;
+      background: #25d366;
+      color: white;
+      padding: 13px 18px;
+      border-radius: 30px;
+      text-decoration: none;
+      font-weight: bold;
+      box-shadow: 0 3px 10px #0003;
+      z-index: 10;
+    }
+
+    @media (max-width: 600px) {
+      .header-top {
+        align-items: flex-start;
+      }
+
+      .logo {
+        font-size: 21px;
+      }
+
+      nav {
+        gap: 12px;
+      }
+
+      .hero {
+        padding: 40px 5%;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <header>
+    <div class="header-top">
+      <div class="logo">GEURSHOM <span>MODERN SHOP</span></div>
+      <div class="header-contact">📞 +250 780 989 311</div>
+    </div>
+
+    <nav>
+      <a href="#home">Ahabanza</a>
+      <a href="#products">Ibicuruzwa</a>
+      <a href="#about">Tumenye</a>
+      <a href="#contact">Twandikire</a>
+    </nav>
+  </header>
+
+  <section class="hero" id="home">
+    <h1>Murakaza neza kuri Geurshom Modern Shop</h1>
+    <p>
+      Dufite electronics, ubukomo, amaherena, imikufi n'ibindi bicuruzwa.
+      Hitamo icyo ushaka, urebe igiciro, maze uduhe commande.
+    </p>
+    <a href="#products" class="button">Reba ibicuruzwa</a>
+  </section>
+
+  <div class="search-area">
+    <input
+      type="search"
+      id="searchInput"
+      placeholder="Shakisha igicuruzwa..."
+      aria-label="Shakisha ibicuruzwa"
+    >
+  </div>
+
+  <div class="categories" id="categories">
+    <button class="category-button active" data-category="Byose">Byose</button>
+    <button class="category-button" data-category="Electronics">Electronics</button>
+    <button class="category-button" data-category="Imitako">Imitako</button>
+    <button class="category-button" data-category="Ibikoresho byo mu rugo">Ibikoresho byo mu rugo</button>
+  </div>
+
+  <section class="section" id="products">
+    <h2>Ibicuruzwa byacu</h2>
+    <div class="products" id="productList"></div>
+  </section>
+
+  <section class="about" id="about">
+    <h2>About Geurshom Modern Shop</h2>
+    <p>
+      Geurshom Modern Shop igamije kuguha ibicuruzwa bitandukanye
+      ku buryo bworoshye. Ushobora kureba ibicuruzwa, kugenzura ibiciro
+      no kudutumiza ukoresheje WhatsApp.
+    </p>
+  </section>
+
+  <section class="contact" id="contact">
+    <h2>Twandikire</h2>
+    <p>📞 Telefoni: +250 780 989 311</p>
+    <p>📧 Email: umwamiking2500@gmail.com</p>
+    <p>📍 Rwanda</p>
+    <br>
+    <a
+      class="button"
+      href="https://wa.me/250780989311"
+      target="_blank"
+      rel="noopener noreferrer"
+    >
+      Twandikire kuri WhatsApp
+    </a>
+  </section>
+
+  <footer>
+    <p>© <span id="year"></span> Geurshom Modern Shop. All rights reserved.</p>
+  </footer>
+
+  <a
+    class="whatsapp-float"
+    href="https://wa.me/250780989311"
+    target="_blank"
+    rel="noopener noreferrer"
+    aria-label="Vugana natwe kuri WhatsApp"
+  >
+    WhatsApp
+  </a>
+
+  <script>
+    /*
+      Izi ni sample products zo kugerageza website.
+      Hindura amazina, amafoto n'ibiciro mbere yo kuyishyira ku mugaragaro.
+    */
+
+    const sampleProducts = [
+      {
+        id: 1,
+        name: "Radio",
+        category: "Electronics",
+        price: 15000,
+        image: "https://placehold.co/600x400?text=Radio"
+      },
+      {
+        id: 2,
+        name: "Icyuma cyo gucuma",
+        category: "Ibikoresho byo mu rugo",
+        price: 12000,
+        image: "https://placehold.co/600x400?text=Iron"
+      },
+      {
+        id: 3,
+        name: "Headphones",
+        category: "Electronics",
+        price: 8000,
+        image: "https://placehold.co/600x400?text=Headphones"
+      },
+      {
+        id: 4,
+        name: "Cable yo kwishyuriza telefone",
+        category: "Electronics",
+        price: 2500,
+        image: "https://placehold.co/600x400?text=Charging+Cable"
+      },
+      {
+        id: 5,
+        name: "Ubukomo bw'amasaro",
+        category: "Imitako",
+        price: 500,
+        image: "https://placehold.co/600x400?text=Bracelet"
+      },
+      {
+        id: 6,
+        name: "Amaherena",
+        category: "Imitako",
+        price: 3000,
+        image: "https://placehold.co/600x400?text=Earrings"
+      },
+      {
+        id: 7,
+        name: "Umukufi",
+        category: "Imitako",
+        price: 4000,
+        image: "https://placehold.co/600x400?text=Necklace"
+      },
+      {
+        id: 8,
+        name: "Speaker",
+        category: "Electronics",
+        price: 18000,
+        image: "https://placehold.co/600x400?text=Speaker"
+      }
+    ];
+
+    let products = [...sampleProducts];
+    let selectedCategory = "Byose";
+
+    const productList = document.getElementById("productList");
+    const searchInput = document.getElementById("searchInput");
+
+    function formatPrice(price) {
+      return new Intl.NumberFormat("en-RW").format(price) + " RWF";
+    }
+
+    function renderProducts() {
+      const searchTerm = searchInput.value.trim().toLowerCase();
+
+      const filteredProducts = products.filter(product => {
+        const matchesSearch =
+          product.name.toLowerCase().includes(searchTerm) ||
+          product.category.toLowerCase().includes(searchTerm);
+
+        const matchesCategory =
+          selectedCategory === "Byose" ||
+          product.category === selectedCategory;
+
+        return matchesSearch && matchesCategory;
+      });
+
+      productList.replaceChildren();
+
+      if (filteredProducts.length === 0) {
+        const message = document.createElement("p");
+        message.className = "empty-message";
+        message.textContent = "Nta bicuruzwa bihuye n'ibyo washakishije.";
+        productList.appendChild(message);
+        return;
+      }
+
+      filteredProducts.forEach(product => {
+        const card = document.createElement("article");
+        card.className = "product-card";
+
+        const image = document.createElement("img");
+        image.className = "product-image";
+        image.src = product.image;
+        image.alt = product.name;
+        image.loading = "lazy";
+        image.onerror = () => {
+          image.src = "https://placehold.co/600x400?text=Product";
+        };
+
+        const info = document.createElement("div");
+        info.className = "product-info";
+
+        const name = document.createElement("h3");
+        name.textContent = product.name;
+
+        const category = document.createElement("p");
+        category.className = "category-label";
+        category.textContent = product.category;
+
+        const price = document.createElement("p");
+        price.className = "price";
+        price.textContent = formatPrice(product.price);
+
+        const order = document.createElement("a");
+        order.className = "order-button";
+        order.textContent = "Tumiza kuri WhatsApp";
+        order.href =
+          "https://wa.me/250780989311?text=" +
+          encodeURIComponent(
+            "Muraho, ndashaka gutumiza: " +
+            product.name +
+            ". Igiciro: " +
+            formatPrice(product.price) +
+            ". Ese kirahari?"
+          );
+        order.target = "_blank";
+        order.rel = "noopener noreferrer";
+
+        info.append(name, category, price, order);
+        card.append(image, info);
+        productList.appendChild(card);
+      });
+    }
+
+    searchInput.addEventListener("input", renderProducts);
+
+    document.querySelectorAll(".category-button").forEach(button => {
+      button.addEventListener("click", () => {
+        document.querySelectorAll(".category-button").forEach(item => {
+          item.classList.remove("active");
+        });
+
+        button.classList.add("active");
+        selectedCategory = button.dataset.category;
+        renderProducts();
+      });
+    });
+
+    document.getElementById("year").textContent =
+      new Date().getFullYear();
+
+    /*
+      Niba backend ya Node.js iri gukora, gerageza gukura ibicuruzwa kuri API.
+      Niba API itabonetse, website ikoresha sample products zo hejuru.
+    */
+    async function loadProducts() {
+      try {
+        const response = await fetch("/api/products");
+
+        if (!response.ok) {
+          throw new Error("Products API ntiboneka.");
+        }
+
+        const data = await response.json();
+
+        if (Array.isArray(data) && data.length > 0) {
+          products = data.map(product => ({
+            id: product.id,
+            name: product.name || "Igicuruzwa",
+            category: product.category || "Ibindi",
+            price: Number(product.price) || 0,
+            image: product.image || "https://placehold.co/600x400?text=Product"
+          }));
+
+          renderProducts();
+        }
+      } catch (error) {
+        console.info("Website iri gukoresha sample products.", error.message);
+      }
+    }
+
+    renderProducts();
+    loadProducts();
+  </script>
+
+</body>
+</html>
+```
